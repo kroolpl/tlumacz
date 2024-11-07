@@ -1,0 +1,26 @@
+# www.robotstxt.org
+
+User-agent: *
+Allow: /
+Allow: /en/
+Allow: /services
+Allow: /en/services
+Allow: /contact
+Allow: /en/contact
+
+# Sitemaps
+Sitemap: https://linguabridge.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10
+
+# Disallow
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*?*
+
+# Host
+Host: https://linguabridge.com 

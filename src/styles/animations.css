@@ -1,0 +1,412 @@
+/* Base animation classes */
+[class*='animation-'] {
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[class*='animation-'].animate {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Fade up animation */
+.animation-fade-up {
+  transform: translateY(20px);
+}
+
+/* Fade in animation */
+.animation-fade-in {
+  opacity: 0;
+}
+
+/* Scale up animation */
+.animation-scale-up {
+  transform: scale(0.95);
+}
+
+/* Hover animations */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -8px rgba(59, 130, 246, 0.3);
+}
+
+.hover-glow {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.15);
+}
+
+/* Gradient animation */
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Button animations */
+.button-pulse {
+  position: relative;
+  isolation: isolate;
+}
+
+.button-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(to right, #3B82F6, #6366F1);
+  border-radius: 9999px;
+  z-index: -2;
+}
+
+.button-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(to right, #3B82F6, #6366F1);
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+.button-pulse:hover::after {
+  opacity: 0.9;
+  filter: brightness(110%);
+}
+
+.button-pulse:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.5);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.05;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class*='animation-'] {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Add touch device optimization */
+@media (hover: none) {
+  .hover-lift:hover {
+    transform: none;
+  }
+  
+  .hover-glow:hover {
+    box-shadow: none;
+  }
+}
+
+/* Add these new animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+/* Add a new shine effect for primary CTAs */
+.button-pulse::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  transform: skewX(-25deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+/* Add these new animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shimmer-reverse {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-shimmer-reverse {
+  animation: shimmer-reverse 2s infinite;
+}
+
+/* Add to your existing animations */
+@keyframes float-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.workflow-item {
+  animation: float-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.workflow-item:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.workflow-item:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.workflow-item:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+/* Add hover animation for the connecting arrows */
+@keyframes arrow-pulse {
+  0%, 100% {
+    transform: translateX(0) translateY(-50%);
+  }
+  50% {
+    transform: translateX(5px) translateY(-50%);
+  }
+}
+
+.workflow-item:hover .arrow {
+  animation: arrow-pulse 1s ease-in-out infinite;
+}
+
+/* Add these new animations to your existing file */
+
+/* Gradient text animation */
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: textShine 5s linear infinite;
+}
+
+@keyframes textShine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Floating elements with different timings */
+.float-1 {
+  animation: float1 6s ease-in-out infinite;
+}
+
+.float-2 {
+  animation: float2 8s ease-in-out infinite;
+}
+
+.float-3 {
+  animation: float3 10s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-15px) rotate(-5deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-25px) scale(1.05); }
+}
+
+/* Glowing border animation */
+.animate-border-glow {
+  animation: borderGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+  from {
+    border-color: rgba(99, 102, 241, 0.2);
+  }
+  to {
+    border-color: rgba(99, 102, 241, 0.6);
+  }
+}
+
+/* Micro-interaction for icons */
+.hover-rotate {
+  transition: transform 0.3s ease;
+}
+
+.hover-rotate:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Shimmering overlay effect */
+.shimmer-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmerOverlay 2s infinite;
+}
+
+@keyframes shimmerOverlay {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Pulsing shadow */
+.pulse-shadow {
+  animation: pulseShadow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseShadow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px 0 rgba(79, 70, 229, 0.4);
+  }
+}
+
+/* Add these new animations */
+@keyframes button-breath {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 0 rgba(79, 70, 229, 0.6);
+  }
+}
+
+@keyframes button-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-button-breath {
+  animation: button-breath 3s ease-in-out infinite;
+}
+
+.animate-button-pulse {
+  animation: button-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Add this new animation */
+@keyframes icon-breath {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.15);
+    filter: brightness(1.2);
+  }
+}
+
+.animate-icon-breath {
+  animation: icon-breath 2s ease-in-out infinite;
+}

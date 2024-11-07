@@ -1,0 +1,138 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ui } from '../../i18n/ui';
+import QuoteForm from '../../components/QuoteForm';
+
+const t = ui['en'];
+---
+
+<Layout title="Contact" lang="en" description={t['contact.description']}>
+  <div class="relative overflow-hidden pt-24">
+    {/* Background decorative elements */}
+    <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent"></div>
+      <div class="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
+      <div class="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-secondary/10 rounded-full mix-blend-multiply filter blur-3xl animate-float-delayed"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Header Section */}
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h1 class="text-4xl md:text-5xl font-playfair mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+          {t['contact.title']}
+        </h1>
+        <p class="text-xl text-gray-600">
+          {t['contact.subtitle']}
+        </p>
+      </div>
+
+      {/* Main Content */}
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        {/* Contact Information */}
+        <div class="space-y-8">
+          {/* Contact Cards */}
+          <div class="grid sm:grid-cols-2 gap-6">
+            {/* Office Location */}
+            <div class="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-primary/10 hover:shadow-xl transition-all">
+              <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl mb-6 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 class="font-semibold text-lg mb-4">{t['contact.address']}</h3>
+              <address class="not-italic text-gray-600 space-y-2">
+                <p>LinguaBridge</p>
+                <p>ul. Przykładowa 123</p>
+                <p>00-001 Warsaw</p>
+              </address>
+            </div>
+
+            {/* Contact Details */}
+            <div class="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-primary/10 hover:shadow-xl transition-all">
+              <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl mb-6 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 class="font-semibold text-lg mb-4">Contact</h3>
+              <div class="space-y-2">
+                <a href="tel:+48123456789" class="block text-primary hover:text-secondary transition-colors">
+                  +48 123 456 789
+                </a>
+                <a href="mailto:contact@linguabridge.com" class="block text-primary hover:text-secondary transition-colors">
+                  contact@linguabridge.com
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Working Hours */}
+          <div class="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-primary/10 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl mb-6 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-4">{t['contact.hours']}</h3>
+            <div class="space-y-2 text-gray-600">
+              <p class="flex justify-between">
+                <span>Monday - Friday:</span>
+                <span class="font-medium">9:00 - 17:00</span>
+              </p>
+              <p class="flex justify-between">
+                <span>Saturday - Sunday:</span>
+                <span class="font-medium">Closed</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Additional Information */}
+          <div class="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-primary/10 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl mb-6 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="font-semibold text-lg mb-4">Information</h3>
+            <ul class="space-y-3 text-gray-600">
+              <li class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Online meetings available via Zoom/Teams
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Express translation services available
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Free quote within 24 hours
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Quote Form */}
+        <div class="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-primary/10">
+          <QuoteForm
+            client:load
+            translations={{
+              title: t['quote.title'],
+              name: t['quote.name'],
+              email: t['quote.email'],
+              message: t['quote.message'],
+              upload: t['quote.upload'],
+              submit: t['quote.submit']
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

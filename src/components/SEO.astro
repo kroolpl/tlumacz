@@ -1,0 +1,142 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  lang: 'en' | 'pl';
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+  keywords?: string;
+}
+
+const {
+  title,
+  description,
+  image = '/images/og-image.jpg',
+  lang,
+  canonicalURL = Astro.url.href,
+  type = 'website',
+  keywords
+} = Astro.props;
+
+const siteName = 'LinguaBridge';
+
+// Get the current path segments
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const currentPath = pathSegments.length > 1 ? pathSegments[1] : '';
+
+// Generate alternate URLs based on the current path
+const getAlternateUrl = (targetLang: string) => {
+  const baseUrl = 'https://linguabridge.com';
+  if (targetLang === 'en') {
+    return `${baseUrl}/en${currentPath ? `/${currentPath}` : ''}`;
+  }
+  return `${baseUrl}${currentPath ? `/${currentPath}` : ''}`;
+};
+---
+
+<!-- Primary Meta Tags -->
+<title>{title} | {siteName}</title>
+<meta name="title" content={`${title} | ${siteName}`} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="index, follow" />
+<meta name="language" content={lang} />
+<meta name="keywords" content={keywords} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={lang === 'en' ? 'en_US' : 'pl_PL'} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={`${title} | ${siteName}`} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Alternate Language Links -->
+<link 
+  rel="alternate" 
+  href={getAlternateUrl('pl')}
+  hreflang="pl" 
+/>
+<link 
+  rel="alternate" 
+  href={getAlternateUrl('en')}
+  hreflang="en" 
+/>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://linguabridge.com",
+    "name": "LinguaBridge - Tłumacz Przysięgły",
+    "image": [
+      `${new URL(image, Astro.url)}`
+    ],
+    "description": description,
+    "url": "https://linguabridge.com",
+    "telephone": "+48123456789",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ul. Przykładowa 123",
+      "addressLocality": "Katowice",
+      "postalCode": "40-001",
+      "addressCountry": "PL"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "50.2649",
+      "longitude": "19.0238"
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Katowice"
+    },
+    "priceRange": "$$",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "17:00"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/linguabridge",
+      "https://www.facebook.com/linguabridge"
+    ],
+    "serviceType": [
+      "Tłumaczenia przysięgłe",
+      "Sworn translations",
+      "Certified translations"
+    ]
+  }
+</script>
+
+<!-- Add breadcrumbs structured data -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": lang === 'pl' ? "Strona główna" : "Home",
+      "item": "https://linguabridge.com" + (lang === 'en' ? '/en' : '')
+    }]
+  }
+</script> 

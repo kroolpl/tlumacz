@@ -1,0 +1,41 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languages } from '../i18n/ui';
+
+// Get current path without language prefix
+const currentPath = Astro.url.pathname.split('/').slice(2).join('/');
+---
+
+<div class="flex gap-2">
+  {Object.entries(languages).map(([lang, label]) => (
+    <a
+      href={getRelativeLocaleUrl(lang, currentPath)}
+      class={`px-3 py-1 rounded flex items-center gap-2 transition-all duration-200 ${
+        Astro.currentLocale === lang 
+          ? 'bg-primary text-white' 
+          : 'text-gray-600 hover:text-primary hover:bg-primary/5'
+      }`}
+      hreflang={lang}
+    >
+      <img 
+        src={`/images/flags/${lang}.svg`} 
+        alt={`${label} flag`}
+        class="w-4 h-4 rounded-sm transform transition-transform duration-200 hover:scale-110 shadow-sm hover:shadow-md"
+        width="16"
+        height="16"
+      />
+      {label}
+    </a>
+  ))}
+</div>
+
+<style>
+  img {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  a:hover img {
+    transform: scale(1.1) translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+</style>

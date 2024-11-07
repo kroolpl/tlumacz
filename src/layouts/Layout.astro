@@ -1,0 +1,249 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import LanguageSelector from '../components/LanguageSelector.astro';
+import SEO from '../components/SEO.astro';
+import { ui } from '../i18n/ui';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import '../styles/global.css';
+import '../styles/animations.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  lang: 'en' | 'pl';
+  type?: 'website' | 'article';
+}
+
+const { 
+  title, 
+  description = ui[Astro.props.lang]['site.description'], 
+  image,
+  lang,
+  type 
+} = Astro.props;
+const t = ui[lang];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      lang={lang}
+      type={type}
+    />
+
+    <!-- Preload critical assets -->
+    <link 
+      rel="preload" 
+      href="/images/logo_apf_long.png" 
+      as="image"
+    />
+    
+    <!-- PWA tags -->
+    <meta name="theme-color" content="#3B82F6" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <ViewTransitions fallback="swap" />
+
+    <style>
+      /* Ensure smooth transitions for background colors */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+
+      /* Prevent flash of white during page transitions */
+      ::view-transition-old(page),
+      ::view-transition-new(page) {
+        animation: none;
+      }
+
+      /* Custom transition for main content */
+      main {
+        view-transition-name: page;
+      }
+
+      /* Keep header persistent */
+      header {
+        view-transition-name: header;
+      }
+
+      /* Ensure mobile menu stays on top */
+      #mobile-menu {
+        view-transition-name: mobile-menu;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50">
+    <div class="h-2 bg-gradient-to-r from-primary via-purple-500 to-secondary"></div>
+    <header 
+      class="fixed w-full bg-white/80 backdrop-blur-sm z-50 shadow-sm"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          {/* Logo */}
+          <div class="flex-shrink-0">
+            <a href={getRelativeLocaleUrl(lang, '')} class="flex items-center">
+              <div class="flex items-baseline gap-3">
+                <span class="text-3xl md:text-4xl font-heading font-bold tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  APF
+                </span>
+                <span class="text-sm md:text-base font-sans text-gray-600">
+                  {lang === 'en' ? 'sworn translator' : 'tłumacz przysięgły'}
+                </span>
+              </div>
+            </a>
+          </div>
+
+          {/* Mobile menu button */}
+          <button 
+            id="mobile-menu-button" 
+            class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors"
+            aria-label="Main menu"
+          >
+            <svg class="h-6 w-6" id="menu-icon" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+              <path class="menu-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              <path class="menu-close hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Desktop Navigation */}
+          <nav class="hidden md:flex items-center space-x-8">
+            <div class="flex items-center space-x-8">
+              <a 
+                href={getRelativeLocaleUrl(lang, '')} 
+                class={`text-gray-600 hover:text-primary transition-colors font-medium ${
+                  Astro.url.pathname === (lang === 'en' ? '/en' : '/') ? 'text-primary' : ''
+                }`}
+              >
+                {t['nav.home']}
+              </a>
+              <a 
+                href={getRelativeLocaleUrl(lang, 'services')} 
+                class={`text-gray-600 hover:text-primary transition-colors font-medium ${
+                  Astro.url.pathname.includes('services') ? 'text-primary' : ''
+                }`}
+              >
+                {t['nav.services']}
+              </a>
+              <a 
+                href={getRelativeLocaleUrl(lang, 'contact')} 
+                class={`text-gray-600 hover:text-primary transition-colors font-medium ${
+                  Astro.url.pathname.includes('contact') ? 'text-primary' : ''
+                }`}
+              >
+                {t['nav.contact']}
+              </a>
+            </div>
+            <LanguageSelector />
+          </nav>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div 
+          id="mobile-menu" 
+          class="md:hidden hidden"
+        >
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            <a 
+              href={getRelativeLocaleUrl(lang, '')} 
+              class={`block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors ${
+                Astro.url.pathname === (lang === 'en' ? '/en' : '/') ? 'text-primary bg-gray-50' : ''
+              }`}
+            >
+              {t['nav.home']}
+            </a>
+            <a 
+              href={getRelativeLocaleUrl(lang, 'services')} 
+              class={`block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors ${
+                Astro.url.pathname.includes('services') ? 'text-primary bg-gray-50' : ''
+              }`}
+            >
+              {t['nav.services']}
+            </a>
+            <a 
+              href={getRelativeLocaleUrl(lang, 'contact')} 
+              class={`block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors ${
+                Astro.url.pathname.includes('contact') ? 'text-primary bg-gray-50' : ''
+              }`}
+            >
+              {t['nav.contact']}
+            </a>
+            <div class="px-3 py-2">
+              <LanguageSelector />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main transition:animate="slide">
+      <slot />
+    </main>
+
+    <footer 
+      class="bg-gray-900 text-white mt-12 py-12"
+      transition:animate="fade"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-xl font-playfair mb-4">LinguaBridge</h3>
+            <p class="text-gray-400">Professional translation services with the highest attention to detail and accuracy.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">{t['nav.services']}</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li>{t['services.legal']}</li>
+              <li>{t['services.business']}</li>
+              <li>{t['services.personal']}</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">{t['nav.contact']}</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li>contact@linguabridge.com</li>
+              <li>+48 123 456 789</li>
+              <li>ul. Przykładowa 123<br/>00-001 Warszawa</li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>&copy; 2024 LinguaBridge. {t['footer.rights']}</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script>
+  // Persist mobile menu state across page transitions
+  document.addEventListener('astro:page-load', () => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const menuOpenPath = menuIcon?.querySelector('.menu-open');
+    const menuClosePath = menuIcon?.querySelector('.menu-close');
+
+    mobileMenuButton?.addEventListener('click', () => {
+      mobileMenu?.classList.toggle('hidden');
+      menuOpenPath?.classList.toggle('hidden');
+      menuClosePath?.classList.toggle('hidden');
+    });
+  });
+</script>
