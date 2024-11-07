@@ -1,6 +1,6 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -8,7 +8,7 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
     
-    // Create transporter using your email service (e.g., Gmail)
+    // Create transporter using your email service
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -20,7 +20,7 @@ exports.handler = async (event) => {
     // Setup email data
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: 'your-email@example.com', // Your email address
+      to: 'your-email@example.com',
       subject: 'New Form Submission - LinguaBridge',
       html: `
         <h2>New Translation Quote Request</h2>
@@ -35,7 +35,6 @@ exports.handler = async (event) => {
       })) : []
     };
 
-    // Send email
     await transporter.sendMail(mailOptions);
 
     return {

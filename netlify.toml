@@ -3,18 +3,14 @@
   publish = "dist"
   functions = "netlify/functions"
 
-[[forms]]
-  name = "quote"
-  success_url = "/success"
-
-  [forms.fields]
-    name = { type = "text", required = true }
-    email = { type = "email", required = true }
-    message = { type = "text", required = true }
-    files = { type = "file" }
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
 
 [functions]
   node_bundler = "esbuild"
+  external_node_modules = ["nodemailer"]
 
 [build.environment]
   NODE_VERSION = "18"
